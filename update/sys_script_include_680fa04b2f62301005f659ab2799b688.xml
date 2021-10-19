@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_58872_needit.getPreviousBusinessDate</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Pass in the amount of previous days from today, get the corresponding date.  The business date is based on the  PEO STRI business schedule.</description>
+        <name>getPreviousBusinessDate</name>
+        <script><![CDATA[var getPreviousBusinessDate = function(daysPrevious) {
+	daysPrevious = daysPrevious < 0 ? 0 : daysPrevious; 
+    //var sched = new GlideSchedule('090eecae0a0a0b260077e1dfa71da828', 'US/Eastern');
+	var sched = new GlideSchedule('090eecae0a0a0b260077e1dfa71da828');
+    var startDayTime = '08:00:00';
+    var currentDate = new GlideDate();
+    var dur = new GlideDuration();
+	//+1 to days previous so the current day is not counted; 9 hours in a business day per schedule
+    dur.setValue(60 * 60 * 9 * 1000 * (daysPrevious + 1));
+
+    var daysToGoBack = daysPrevious * -1;
+    do{
+		var targetDate = new GlideDateTime(currentDate.getDisplayValue() + ' ' + startDayTime);
+        targetDate.addDaysLocalTime(daysToGoBack);
+		//adding duration to target date to see if we went back far enough.  if test date
+		// is greater than current date, we did not take enough days off to account for weekend/holiday
+        var testDate = sched.add(targetDate, dur);
+		daysToGoBack-=1;
+    //}while(!(new GlideDateTime(testDate.getDate().getDisplayValue()).equals(new GlideDateTime(currentDate.getDisplayValue()))));
+	}while((new GlideDateTime(testDate.getDate().getDisplayValue()) > (new GlideDateTime(currentDate.getDisplayValue()))));
+	return targetDate;
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-09-16 17:19:20</sys_created_on>
+        <sys_id>680fa04b2f62301005f659ab2799b688</sys_id>
+        <sys_mod_count>125</sys_mod_count>
+        <sys_name>getPreviousBusinessDate</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_script_include_680fa04b2f62301005f659ab2799b688</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-09-21 16:17:12</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report_source">
+    <sys_report_source action="INSERT_OR_UPDATE">
+        <description>For TestIncidentNotificationReport</description>
+        <display>TestIncidentNotificationReportDataSource (Incident)</display>
+        <filter table="incident">sys_updated_onRELATIVEGT@dayofweek@ago@5<item endquery="false" field="sys_updated_on" goto="false" newquery="false" operator="RELATIVE" or="false" value="GT@dayofweek@ago@5"/>
+        </filter>
+        <name>TestIncidentNotificationReportDataSource</name>
+        <sys_class_name>sys_report_source</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-09-15 19:54:34</sys_created_on>
+        <sys_id>0ae4ccf22f62301005f659ab2799b699</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>TestIncidentNotificationReportDataSource (Incident)</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_report_source_0ae4ccf22f62301005f659ab2799b699</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-09-15 19:54:34</sys_updated_on>
+        <table>incident</table>
+    </sys_report_source>
+</record_update>
