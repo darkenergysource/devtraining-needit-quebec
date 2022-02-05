@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_in_email_action">
+    <sysevent_in_email_action action="INSERT_OR_UPDATE">
+        <action>record_action</action>
+        <active>true</active>
+        <assignment_operator/>
+        <condition_script>email.subject.toLowerCase().indexOf("please close needit task") &gt;= 0</condition_script>
+        <description>Exercise: MailTo Email Template (Optional)&#13;
+&#13;
+In this exercise, you will create and test a mailto email template. You will create an inbound action to respond to the subject line inserted by the mailto email template.&#13;
+Create the MailTo Email Template&#13;
+&#13;
+    1 If the NeedIt application is not open in Studio from a previous exercise, open it now.&#13;
+        In the main ServiceNow browser window use the Application Navigator to open System Applications &gt; Studio.&#13;
+        In the Select Application dialog, click the NeedIt application.&#13;
+   2  Create an Email Template.&#13;
+        In Studio, select the Create Application File link.&#13;
+        In the Filter... field enter the text Email OR select Notifications from the categories in the left hand pane.&#13;
+        Select Email Template in the middle pane as the file type then click the Create button.&#13;
+   3  Configure the Email Template:&#13;
+        Name: mailto.closeneedittask&#13;
+        Table: NeedIt Task [x_58872_needit_needit_task]&#13;
+        Subject: Re: ${number} - please close NeedIt Task&#13;
+        Message HTML: Click here to close NeedIt Task ${number}&#13;
+   4  Click the Submit button to save the Email Template.&#13;
+&#13;
+Edit the Overdue NeedIt Task Notification&#13;
+&#13;
+   1  In Studio, use the Application Explorer to open Notifications &gt; Notification &gt; Overdue NeedIt Task.&#13;
+&#13;
+   2  Add this line to the Message HTML at the location of your choice:&#13;
+&#13;
+    ${mailto:mailto.closeneedittask}&#13;
+&#13;
+   3  Click the Update button to save the change.&#13;
+&#13;
+Create an Inbound Action&#13;
+&#13;
+   1  Create an Inbound Email Action.&#13;
+        In Studio, click the Create Application File link.&#13;
+        In the Filter... field enter the text Inbound OR select Notifications from the categories in the left hand pane.&#13;
+        Select Inbound Email Actions in the middle pane as the file type then select the Create button.&#13;
+&#13;
+  2  Configure the Inbound Email Action:&#13;
+        Name: Close NeedIt Task&#13;
+        Target table: NeedIt Task [x_58872_needit_needit_task]&#13;
+        Action type: Record Action&#13;
+        Active: Selected (checked)&#13;
+        Stop processing: Selected (checked)&#13;
+&#13;
+   3  Configure the When to run section.&#13;
+        Type: Reply&#13;
+        Condition: email.subject.toLowerCase().indexOf("please close needit task") &gt;= 0&#13;
+&#13;
+    NOTE: Make sure the Condition field does not contain smart quotes.&#13;
+&#13;
+   4  Configure the Actions section.&#13;
+        Use the Field actions to create the action: [State] [To] [Closed Complete]&#13;
+        Set the State field value to Closed Complete&#13;
+&#13;
+   5  Configure the Description section. Using your own words, add a description of the Inbound Email Action to the Description field.&#13;
+&#13;
+   6  Click the Submit button to save the Inbound Email Action.&#13;
+&#13;
+&#13;
+============&#13;
+Test the Inbound Email Action and MailTo Template&#13;
+&#13;
+    Force ServiceNow to send the Overdue NeedIt Task notification.&#13;
+        In Studio, use the Application Explorer to open Server Development &gt; Scheduled Script Execution &gt; Find Overdue NeedIt Tasks.&#13;
+        Click the Execute Now button.&#13;
+    Switch to your email application and open an Overdue NeedIt Task email you just received. Be patient as it may take a couple of minutes for the email to be sent and received.&#13;
+    Reply to the Overdue NeedIt Task email.&#13;
+        Click the Click here to close NeedIt Task &lt;record number&gt; link.&#13;
+        Note the value in the subject field. It should contain the text please close NeedIt Task.&#13;
+        If desired, add some text to the message body.&#13;
+        If necessary, change the recipient to be devXXXXX@service-now.com, where XXXXX = your PDI number. Refer to the IMPORTANT message in the introduction to Exercise: Create Inbound Email Action to determine if you need to change the email recipient.&#13;
+        Send the reply.&#13;
+    Return to your ServiceNow instance and use the Application Navigator in the main ServiceNow browser window to open System Mailboxes &gt; Inbound &gt; Received.&#13;
+    Watch for your reply to arrive. Be patient as it might take several minutes for your email server to send the email for ServiceNow and for ServiceNow to pick up the email from its mail server. To refresh the list, click the Additional actions (Additional Actions menu) menu and select the Refresh List menu item.&#13;
+    Examine the State field.&#13;
+        If the State value is Processed, the reply was matched with an Inbound Email Action. This is the expected result.&#13;
+        If the State value is Ignored, there is an issue. Open the record and examine the Error string field to determine why the reply was ignored.&#13;
+        The Error String field explains the error&#13;
+    Verify the NeedIt Task record was updated.&#13;
+        Use the Application Navigator in the main ServiceNow browser window to open NeedIt &gt; NeedIt Tasks.&#13;
+        Open the overdue Record.&#13;
+            Examine the value of the State field. It should be Closed Complete.&#13;
+            Examine the Activities field. You should see the State value was changed.&#13;
+            The Inbound Action changed the State field value to Closed Complete&#13;
+&#13;
+</description>
+        <event_name>email.read</event_name>
+        <filter_condition/>
+        <from/>
+        <name>Close NeedIt Task</name>
+        <order>100</order>
+        <reply_email/>
+        <required_roles/>
+        <script><![CDATA[(function runAction(/*GlideRecord*/ current, /*GlideRecord*/ event, /*EmailWrapper*/ email, /*ScopedEmailLogger*/ logger, /*EmailClassifier*/ classifier) {
+
+	// Implement email action here
+
+})(current, event, email, logger, classifier);]]></script>
+        <stop_processing>true</stop_processing>
+        <sys_class_name>sysevent_in_email_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-05 03:06:57</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>5e5cf86c2f61011005f659ab2799b672</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Close NeedIt Task</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sysevent_in_email_action_5e5cf86c2f61011005f659ab2799b672</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-05 03:06:57</sys_updated_on>
+        <table>x_58872_needit_needit_task</table>
+        <template>state=3^EQ</template>
+        <type>reply</type>
+    </sysevent_in_email_action>
+</record_update>
